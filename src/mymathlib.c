@@ -1,5 +1,6 @@
 #include "mymathlib.h"
-// #include <stdlib.h>
+#include <math.h>
+#include <stdlib.h>
 
 int max(int a, int b){
     if(a < b){
@@ -62,31 +63,81 @@ int lcm(int a, int b){
 }
 
 int is_prime(int n){
-    return 0;
+    if (n <= 1){
+        return 0;
+    }
+    if (n == 2 || n == 3){
+        return 1;
+    }
+
+    if (n % 2 == 0 || n % 3 == 0){
+        return 0;
+    }
+
+    for (int i = 5; i < sqrt(n); i += 6){
+        if (n % i == 0 || n % (i + 2) == 0)
+            return 0;
+    }
+    return 1;
 }
 
 int fibonacci(int n){
-    return 0;
+    if (n == 0){
+        return 0;
+    }
+
+    if (n == 1){
+        return 1;
+    }
+
+    int a = 0;
+    int b = 1;
+
+    for(int i = 2; i <= n; i++){
+        int temp = a + b;
+        a = b;
+        b = temp;
+    }
+
+    return a + b;
 }
 
 long long power(int base, int exponent){
-    return 0;
+    long long out = base;
+    for(int i = 0; i < exponent; i++){
+        out = out * base;
+    }
+    return out;
 }
 
 void swap(int *a, int *b){
-    return;
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 void reverse_array(int *arr, int size){
-    return;
+    int temp[size];
+    for(int i = 0; i < size; i++){
+        temp[size-i-1] = arr[i];
+    }
+    arr = temp;
 }
 
 int sum_array(int *arr, int size){
-    return 0;
+    int out = 0;
+
+    for(int i = 0; i < size; i++){
+        out += arr[i];
+    }
+
+    return out;
 }
 
 void increment_all(int *arr, int size, int val){
-    return;
+    for(int i = 0; i < size; i++){
+        arr[i] += val;
+    }
 }
 
 DivisionResult divide(int dividend, int divisor){
@@ -102,23 +153,63 @@ DivisionResult divide(int dividend, int divisor){
 Complex complex_add(Complex a, Complex b){
     Complex out;
 
+    out.real = a.real + b.real;
+    out.imag = a.imag + b.imag;
+
     return out;
 }
 
 Complex complex_multiply(Complex a, Complex b){
     Complex out;
 
+    out.real = (a.real * b.real) - (a.imag * b.imag);
+    out.imag = (a.real * b.imag) + (a.imag * b.real);
+
     return out;
 }
 
 int* generate_primes(int n, int *count){
-    return 0;
+    if (n <= 0){
+        *count = 0;
+        return 0;
+    }
+    int* arr;
+    arr = (int*) malloc(n * sizeof(int));
+
+    int temp = 2;
+    while(*count < n){
+        if (is_prime(temp)){
+            arr[*count] = temp;
+            *count += 1;
+        }
+    }
+
+    return arr;
 }
 
 void shuffle_array(int *arr, int size){
-    return;
+    for(int i = size-1; i > 0; i--){
+        int j = rand() % (i + 1);
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
 }
 
 int binary_search(int *arr, int size, int target){
-    return 0;
+    int l = 0;
+    int r = size - 1;
+    while(l < r){
+        int m = l + ((r - l) / 2);
+        if(arr[m] < target){
+            l = m + 1;
+        }
+        else if (arr[m] > target){
+            r = m - 1;
+        }
+        else{
+            return m;
+        }
+    }
+    return -1;
 }
