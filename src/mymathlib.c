@@ -93,7 +93,7 @@ int fibonacci(int n){
     int a = 0;
     int b = 1;
 
-    for(int i = 2; i <= n; i++){
+    for(int i = 2; i < n; i++){
         int temp = a + b;
         a = b;
         b = temp;
@@ -103,8 +103,11 @@ int fibonacci(int n){
 }
 
 long long power(int base, int exponent){
+    if(exponent == 0){
+        return 1;
+    }
     long long out = base;
-    for(int i = 0; i < exponent; i++){
+    for(int i = 0; i < exponent-1; i++){
         out = out * base;
     }
     return out;
@@ -116,12 +119,12 @@ void swap(int *a, int *b){
     *b = temp;
 }
 
-void reverse_array(int *arr, int size){
-    int temp[size];
-    for(int i = 0; i < size; i++){
-        temp[size-i-1] = arr[i];
+void reverse_array(int *arr, int size) {
+    for (int i = 0; i < size / 2; i++) {
+        int tmp = arr[i];
+        arr[i] = arr[size - i - 1];
+        arr[size - i - 1] = tmp;
     }
-    arr = temp;
 }
 
 int sum_array(int *arr, int size){
@@ -141,7 +144,7 @@ void increment_all(int *arr, int size, int val){
 }
 
 DivisionResult divide(int dividend, int divisor){
-    DivisionResult out;
+    DivisionResult out = {0, 0};
     if(divisor == 0){
         return out;
     }
@@ -173,6 +176,7 @@ int* generate_primes(int n, int *count){
         *count = 0;
         return 0;
     }
+    *count = 0;
     int* arr;
     arr = (int*) malloc(n * sizeof(int));
 
@@ -182,6 +186,7 @@ int* generate_primes(int n, int *count){
             arr[*count] = temp;
             *count += 1;
         }
+        temp++;
     }
 
     return arr;
@@ -199,7 +204,7 @@ void shuffle_array(int *arr, int size){
 int binary_search(int *arr, int size, int target){
     int l = 0;
     int r = size - 1;
-    while(l < r){
+    while(l <= r){
         int m = l + ((r - l) / 2);
         if(arr[m] < target){
             l = m + 1;

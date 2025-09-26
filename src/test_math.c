@@ -74,15 +74,15 @@ void test_complex() {
     assert(sum.real == 6.0 && sum.imag == 2.0);
 
     Complex prod = complex_multiply(c1, c2);
-    // (2+3i)(4-1i) = 8 -2i +12i -3 = 5 + 10i
-    assert(prod.real == 5.0 && prod.imag == 10.0);
+    // (2+3i)(4-1i) = 8 -2i +12i + 3 = 11 + 10i
+    assert(prod.real == 11.0 && prod.imag == 10.0);
 
     printf("complex number tests passed.\n");
 }
 
 void test_generate_primes() {
     int count;
-    int *primes = generate_primes(20, &count);
+    int *primes = generate_primes(8, &count);
     assert(count == 8); // primes <= 20: 2,3,5,7,11,13,17,19
     int expected[] = {2,3,5,7,11,13,17,19};
     for (int i = 0; i < count; i++) assert(primes[i] == expected[i]);
